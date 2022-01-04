@@ -1,5 +1,10 @@
 package org.adligo.i.pipe;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.BiFunction;
+import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -13,7 +18,7 @@ import java.util.function.Predicate;
  * @param <I> input
  * @param <O> output
  */
-public interface I_Pipe<I,O> extends Function<I,O>, I_Run<I> {
+public interface I_Pipe<I,O> extends I_Run<I> {
 	
   I_Pipe<I,O> distinct();
 
@@ -30,9 +35,30 @@ public interface I_Pipe<I,O> extends Function<I,O>, I_Run<I> {
 	
 	I_Pipe<I,O> filter(Predicate<? super O> predicate);
 	
-	<R> I_Pipe<I,R> map(Function<? super O, ? extends R> mapper);
-	
+	/**
+	 * Run the pipeline after it's creation
+	 * @param in
+	 */
+	public Optional<O> get(I in);
 
+	/**
+	 * Run the pipeline after it's creation
+	 * @param in
+	 */
+	public Optional<O> get(I ... in);
+
+	/**
+	 * Run the pipeline after it's creation
+	 * @param in
+	 */
+	public Optional<O> get(Collection<I> in);
+	
+	<R> I_Pipe<I,R> map(Function<? super O, ? extends R> mapper);
+
+	<R> I_Pipe<I,R> reduce(BinaryOperator<O> combiner);
+	
+	<R> I_Pipe<I,R> reduce(R identity, BiFunction<R, ? super O, R> accumulator, BinaryOperator<O> combiner);
+	
 	/**
 	 * A terminal operation on the pipeline
 	 * @param <B>
@@ -44,8 +70,16 @@ public interface I_Pipe<I,O> extends Function<I,O>, I_Run<I> {
 	<R> I_Pipe<I,R> then(Function<? super O, ? extends R> mapper);
 	
 	/**
-	 * Run the pipeline after it's creation
-	 * @param in
+	 * Binds to an ArrayList for shorter lambdas
+	 * @param <R>
+	 * @return
 	 */
-	public O get(I in);
+	I_Pipe<I,List<O>> toList();
+
+	/**
+	 * Binds to an HashSet for shorter lambdas
+	 * @param <R>
+	 * @return
+	*/
+	//I_Pipe<I,Set<O>>toSet();
 }
