@@ -1,6 +1,6 @@
 package org.adligo.i.pipe;
 
-import java.util.List;
+import java.util.function.Function;
 
 /**
  * Note that  I_Pipe is almost identical to a java.util.stream.Stream
@@ -10,6 +10,11 @@ import java.util.List;
  *
  * @param <T>
  */
-public interface I_Pipe<I> {
+public interface I_Pipe<I,O> extends Function<I,O>, I_Run<I> {
 	
+
+	<B,R> I_Pipe<I,O> decision(Function<? super B, ? extends R> mapper);
+	
+	
+	<B,R> I_Pipe<I,R> then(Function<? super B, ? extends R> mapper);
 }
