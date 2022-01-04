@@ -13,8 +13,8 @@ import java.util.function.Function;
 public interface I_Pipe<I,O> extends Function<I,O>, I_Run<I> {
 	
 
-	<B,R> I_Pipe<I,O> decision(Function<? super B, ? extends R> mapper);
+	<B,R> I_Pipe<I,R> decision(Function<? super O, ? extends R> mapper);
 	
 	
-	<B,R> I_Pipe<I,R> then(Function<? super B, ? extends R> mapper);
+	<B,R> I_Pipe<I,R> then(Function<? super O, ? extends R> mapper);
 }

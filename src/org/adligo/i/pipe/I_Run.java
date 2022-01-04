@@ -20,7 +20,7 @@ public interface I_Run<I> {
 	 * @param consumer
 	 * @return
 	 */
-	<B> I_Run<I>  then(Consumer<? super B> consumer);
+	<B> I_Run<I> then(Consumer<? super B> consumer);
 	
 	/**
 	 * Run the pipeline after it's creation
