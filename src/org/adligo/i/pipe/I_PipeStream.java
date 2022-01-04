@@ -15,18 +15,6 @@ import java.util.stream.LongStream;
 
 public interface I_PipeStream<T> {
 
-//
-//	void close();
-//	
-//	I_Pipe<T> distinct() ;
-//
-//	/**
-//	 * This creates a fork / decision in the pipe execution
-//	 * @param consumer
-//	 */
-//	void decision(Consumer<T> consumer) ;
-//	
-//	I_Pipe<T> filter(Predicate<? super T> predicate);
 //	
 //	<R> I_Pipe<R> flatMap(Function<? super T, ? extends I_Pipe<? extends R>> mapper);
 //
@@ -42,7 +30,7 @@ public interface I_PipeStream<T> {
 //	
 //	I_Pipe<T> limit(long maxSize);
 //	
-//	<R> I_Pipe<R> map(Function<? super T, ? extends R> mapper);
+//	
 //
 //	IntStream mapToInt(ToIntFunction<? super T> mapper) ;
 //
