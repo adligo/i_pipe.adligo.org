@@ -56,7 +56,17 @@ public interface I_Pipe<I,O> extends I_Run<I> {
 	<R> I_Pipe<I,R> map(Function<? super O, ? extends R> mapper);
 
 	<R> I_Pipe<I,R> reduce(BinaryOperator<O> combiner);
-	
+
+	/**
+	 * This is particularly useful if you can get
+	 * to a steam of Integer, Floats or Doubles
+	 * @param <R>
+	 * @param identity
+	 * @param combiner
+	 * @return
+	 */
+	<R> I_Pipe<I,R> reduce(O identity, BinaryOperator<O> combiner);
+	   
 	<R> I_Pipe<I,R> reduce(R identity, BiFunction<R, ? super O, R> accumulator, BinaryOperator<O> combiner);
 	
 	/**
