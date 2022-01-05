@@ -30,10 +30,33 @@ public interface I_Pipe<I,O> extends I_Run<I> {
 	 * @return
 	 */
 	I_Run<I> decision(Consumer<? super O> consumer);
+
+	I_Run<I> decision(Consumer<? super O> consumer, String name);
 	
 	<B,R> I_Pipe<I,R> decision(Function<? super O, ? extends R> mapper);
 	
+	<B,R> I_Pipe<I,R> decision(Function<? super O, ? extends R> mapper, String name);
+	
+	/**
+	 * A special note I think the filters in  java.util.stream.Streams
+	 * are backward, if I want a coffee filter, the goal is to keep 
+	 * the coffee out of the coffee pot :) 
+	 * 
+	 * @param predicate
+	 * @return
+	 */
 	I_Pipe<I,O> filter(Predicate<? super O> predicate);
+
+	/**
+	 * A special note I think the filters in  java.util.stream.Streams
+	 * are backward, if I want a coffee filter, the goal is to keep 
+	 * the coffee out of the coffee pot :) 
+	 * 
+	 * @param predicate
+	 * @param name
+	 * @return
+	 */
+	I_Pipe<I,O> filter(Predicate<? super O> predicate, String  name);	
 	
 	/**
 	 * Run the pipeline after it's creation
@@ -52,6 +75,9 @@ public interface I_Pipe<I,O> extends I_Run<I> {
 	 * @param in
 	 */
 	public Optional<O> get(Collection<I> in);
+	
+
+	<R> I_Pipe<I,R> map(Function<? super O, ? extends R> mapper, String name);
 	
 	<R> I_Pipe<I,R> map(Function<? super O, ? extends R> mapper);
 
@@ -77,7 +103,11 @@ public interface I_Pipe<I,O> extends I_Run<I> {
 	 */
 	I_Run<I> then(Consumer<? super O> consumer);
 	
+	I_Run<I> then(Consumer<? super O> consumer, String name);
+	
 	<R> I_Pipe<I,R> then(Function<? super O, ? extends R> mapper);
+	
+	<R> I_Pipe<I,R> then(Function<? super O, ? extends R> mapper, String name);
 	
 	/**
 	 * Binds to an ArrayList for shorter lambdas
