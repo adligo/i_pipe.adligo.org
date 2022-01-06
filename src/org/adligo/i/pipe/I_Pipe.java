@@ -3,6 +3,7 @@ package org.adligo.i.pipe;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
@@ -23,23 +24,10 @@ import java.util.function.Predicate;
  * @param <O> output
  */
 public interface I_Pipe<I,O> extends I_Run<I> {
-	
+		
   I_Pipe<I,O> distinct();
 
-	/**
-	 * A terminal operation on the pipeline
-	 * @param <B>
-	 * @param <R>
-	 * @param consumer
-	 * @return
-	 */
-	I_Run<I> decision(Consumer<? super O> consumer);
-
-	I_Run<I> decision(Consumer<? super O> consumer, String name);
-	
-	<B,R> I_Pipe<I,R> decision(Function<? super O, ? extends R> mapper);
-	
-	<B,R> I_Pipe<I,R> decision(Function<? super O, ? extends R> mapper, String name);
+  I_Pipe<I,O> distinct(String name);
 	
 	/**
 	 * A special note I think the filters in  java.util.stream.Streams
@@ -61,6 +49,46 @@ public interface I_Pipe<I,O> extends I_Run<I> {
 	 * @return
 	 */
 	I_Pipe<I,O> filter(Predicate<? super O> predicate, String  name);	
+	
+	/**
+	 * A fork in the road (aka a choice or decision)
+	 * A terminal operation
+	 * @param <B>
+	 * @param <R>
+	 * @param consumer
+	 * @return
+	 */
+	I_Run<I> fork(Consumer<? super O> consumer);
+
+	/**
+	 * A fork in the road (aka a choice or decision)
+	 * A terminal operation
+	 * @param consumer
+	 * @param name
+	 * @return
+	 */
+	I_Run<I> fork(Consumer<? super O> consumer, String name);
+	
+	/**
+	 * A fork in the road (aka a choice or decision)
+	 * A terminal operation
+	 * @param <B>
+	 * @param <R>
+	 * @param mapper
+	 * @return
+	 */
+	<B,R> I_Pipe<I,R> fork(Function<? super O, ? extends R> mapper);
+	
+	/**
+	 * A fork in the road (aka a choice or decision)
+	 * A terminal operation
+	 * @param <B>
+	 * @param <R>
+	 * @param mapper
+	 * @param name
+	 * @return
+	 */
+	<B,R> I_Pipe<I,R> fork(Function<? super O, ? extends R> mapper, String name);
 	
 	/**
 	 * Run the pipeline after it's creation
@@ -85,6 +113,12 @@ public interface I_Pipe<I,O> extends I_Run<I> {
 	
 	<R> I_Pipe<I,R> map(Function<? super O, ? extends R> mapper);
 
+	/**
+	 * 
+	 * @param <R>
+	 * @param combiner note the accoumulator is passed in as the first argument.
+	 * @return
+	 */
 	<R> I_Pipe<I,R> reduce(BinaryOperator<O> combiner);
 
 	/**
@@ -92,11 +126,19 @@ public interface I_Pipe<I,O> extends I_Run<I> {
 	 * to a steam of Integer, Floats or Doubles
 	 * @param <R>
 	 * @param identity
-	 * @param combiner
+	 * @param combiner combiner note the accoumulator is passed in as the first argument.
 	 * @return
 	 */
 	<R> I_Pipe<I,R> reduce(O identity, BinaryOperator<O> combiner);
 	   
+	/**
+	 * 
+	 * @param <R>
+	 * @param identity
+	 * @param accumulator
+	 * @param combiner combiner note the accoumulator is passed in as the first argument.
+	 * @return
+	 */
 	<R> I_Pipe<I,R> reduce(R identity, BiFunction<R, ? super O, R> accumulator, BinaryOperator<O> combiner);
 	
 	/**
@@ -121,9 +163,23 @@ public interface I_Pipe<I,O> extends I_Run<I> {
 	I_Pipe<I,List<O>> toList();
 
 	/**
+	 * 
+	 * @param name
+	 * @return
+	 */
+  public I_Pipe<I, List<O>> toList(String name);
+  
+	/**
 	 * Binds to an HashSet for shorter lambdas
 	 * @param <R>
 	 * @return
 	*/
-	//I_Pipe<I,Set<O>>toSet();
+	I_Pipe<I,Set<O>>toSet();
+	
+	/**
+	 * Binds to an HashSet for shorter lambdas
+	 * @param <R>
+	 * @return
+	*/
+	I_Pipe<I,Set<O>>toSet(String name);
 }
