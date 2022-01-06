@@ -13,6 +13,10 @@ import java.util.function.Predicate;
  * Note that  I_Pipe is almost identical to a java.util.stream.Stream
  * the main difference is that it MAY be executed (supplied) at a later time
  * and also mimics a list of steps with the then method. 
+ * 
+ * Known Implementations 
+ * {@link org.adligo.pipe.PipeCtx}
+ * 
  * @author scott
  *
  * @param <I> input
