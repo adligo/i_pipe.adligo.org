@@ -1,4 +1,4 @@
-package org.adligo.i.pipe;
+package org.adligo.i_pipe;
 
 /**
  * Thit is a standard way to name the Functions (aka 

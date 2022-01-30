@@ -1,4 +1,4 @@
-package org.adligo.i.pipe;
+package org.adligo.i_pipe;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
