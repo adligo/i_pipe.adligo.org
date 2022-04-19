@@ -65,6 +65,20 @@ public interface I_Pipe<I, O> extends I_Consumer<I> {
   I_Pipe<I, O> block(Predicate<? super O> predicate, String name);
   
   /**
+   * 
+   * @param name
+   * @return
+   */
+  I_Pipe<I, Collection<O>> collection(Supplier<Collection<O>> collectionSupplier);
+
+  /**
+   * 
+   * @param name
+   * @return
+   */
+  I_Pipe<I, Collection<O>> collection(Supplier<Collection<O>> collectionSupplier, String name);
+  
+  /**
    * a sink that provides distinct elements only
    * @return
    */
@@ -147,10 +161,72 @@ public interface I_Pipe<I, O> extends I_Consumer<I> {
    */
   <B, R> I_Pipe<I, R> fork(Function<? super O, ? extends R> mapper, String name);
 
+
+  /**
+   * Binds to an ArrayList for shorter lambdas
+   * 
+   * @param <R>
+   * @return
+   */
+  I_Pipe<I, List<O>> list();
+
+  /**
+   * 
+   * @param name
+   * @return
+   */
+  I_Pipe<I, List<O>> list(String name);
+
+  /**
+   * 
+   * @param name
+   * @return
+   */
+  I_Pipe<I, List<O>> list(Supplier<List<O>> listSupplier);
+
+  /**
+   * 
+   * @param name
+   * @return
+   */
+  I_Pipe<I, List<O>> list(Supplier<List<O>> listSupplier, String name);
+  
   <R> I_Pipe<I, R> map(Function<? super O, ? extends R> mapper, String name);
 
   <R> I_Pipe<I, R> map(Function<? super O, ? extends R> mapper);
 
+  /**
+   * Binds to an HashSet for shorter lambdas
+   * 
+   * @param <R>
+   * @return
+   */
+  <K,V> I_Pipe<I, Map<K, V>> map(BiConsumer<O, Map<K,V>> collector);
+
+  /**
+   * Binds to an HashSet for shorter lambdas
+   * 
+   * @param <R>
+   * @return
+   */
+  <K,V> I_Pipe<I, Map<K, V>> map(String name, BiConsumer<O, Map<K,V>> collector);
+  
+  /**
+   * Binds to an HashSet for shorter lambdas
+   * 
+   * @param <R>
+   * @return
+   */
+  <K,V> I_Pipe<I, Map<K, V>> map(Supplier<Map<K, V>> setSupplier, BiConsumer<O, Map<K,V>> collector);
+
+  /**
+   * Binds to an HashSet for shorter lambdas
+   * 
+   * @param <R>
+   * @return
+   */
+  <K, V> I_Pipe<I, Map<K, V>> map(Supplier<Map<K, V>> setSupplier, String name, BiConsumer<O, Map<K,V>> collector);
+  
   /**
    * 
    * @param <R>
@@ -183,6 +259,38 @@ public interface I_Pipe<I, O> extends I_Consumer<I> {
   <R> I_Pipe<I, R> reduce(R identity, BiFunction<R, ? super O, R> accumulator, BinaryOperator<O> combiner);
 
 
+  /**
+   * Binds to an HashSet for shorter lambdas
+   * 
+   * @param <R>
+   * @return
+   */
+  I_Pipe<I, Set<O>> set();
+
+  /**
+   * Binds to an HashSet for shorter lambdas
+   * 
+   * @param <R>
+   * @return
+   */
+  I_Pipe<I, Set<O>> set(String name);
+  
+  /**
+   * Binds to an HashSet for shorter lambdas
+   * 
+   * @param <R>
+   * @return
+   */
+  I_Pipe<I, Set<O>> set(Supplier<Set<O>> setSupplier);
+
+  /**
+   * Binds to an HashSet for shorter lambdas
+   * 
+   * @param <R>
+   * @return
+   */
+  I_Pipe<I, Set<O>> set(Supplier<Set<O>> setSupplier, String name);
+  
   /**
    * Run the pipeline after it's creation
    * 
@@ -224,14 +332,14 @@ public interface I_Pipe<I, O> extends I_Consumer<I> {
    * @param name
    * @return
    */
-  List<O> toCollection(Supplier<Collection<O>> collectionSupplier);
+  Collection<O> toCollection(Supplier<Collection<O>> collectionSupplier);
 
   /**
    * 
    * @param name
    * @return
    */
-  List<O> toCollection(Supplier<Collection<O>> collectionSupplier, String name);
+  Collection<O> toCollection(Supplier<Collection<O>> collectionSupplier, String name);
   
   /**
    * Binds to an ArrayList for shorter lambdas
