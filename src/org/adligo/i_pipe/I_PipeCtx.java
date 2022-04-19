@@ -11,26 +11,59 @@ import java.util.function.Function;
  * Known Implementations 
  * @see {@link org.adligo.pipe.PipeCtx}
  * @author scott
+ *  ---------------- Apache ICENSE-2.0 --------------------------
  *
+ * Copyright 2022 Adligo Inc
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * </code></pre>
  */
 public interface I_PipeCtx {
 
-  <PI, PO> I_Pipe<PI, PO> newPipe(Consumer<PI> consumer);
+  /**
+   * Create a new Pipe providing the initial consumer
+   * @param <I> the input
+   * @param consumer
+   * @return
+   */
+  <I> I_Pipe<I, Void> newPipe(Consumer<I> consumer);
 
-  <PI, PO> I_Pipe<PI, PO> newPipe(Consumer<PI> consumer, String name);
-  
-  <PI> I_Run<PI> newPipe(Class<PI> inClazz, Consumer<PI> consumer) ;
+  /**
+   * Create a new Pipe providing the initial consumer
+   * @param <I> the input
+   * @param consumer
+   * @return
+   */
+  <I> I_Pipe<I, Void> newPipe(Consumer<I> consumer, String name);
 
-  <PI> I_Run<PI> newPipe(Class<PI> inClazz, 
-  		Consumer<PI> consumer, String name);
-  
-  <PI, PO> I_Pipe<PI, PO> newPipe(Function<PI, PO> fun);
+  /**
+   * Create a new Pipe providing the initial consumer
+   * @param <I> the input
+   * @param <R> the return from the function fun
+   * @param <O> the output
+   * @param consumer
+   * @return
+   */
+  <I, O> I_Pipe<I, O> newPipe(Function<I, O> fun);
 
-  <PI, PO> I_Pipe<PI, PO> newPipe(Function<PI, PO> fun, String name);
-  
-  <PI, PO> I_Pipe<PI, PO> newPipe(Class<PI> inClazz, Class<PO> outClazz, 
-  		Function<PI, PO> fun);
+  /**
+   * Create a new Pipe providing the initial consumer
+   * @param <I> the input
+   * @param <R> the return from the function fun
+   * @param <O> the output
+   * @param consumer
+   * @return
+   */
+  <I, O> I_Pipe<I, O> newPipe(Function<I, O> fun, String name);
 
-  <PI, PO> I_Pipe<PI, PO> newPipe(Class<PI> inClazz, Class<PO> outClazz, 
-  		Function<PI, PO> fun, String name);
 }

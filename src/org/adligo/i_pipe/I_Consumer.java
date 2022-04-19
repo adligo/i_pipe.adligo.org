@@ -1,9 +1,17 @@
 package org.adligo.i_pipe;
 
+import java.util.Collection;
+
 /**
- * Thit is a standard way to name the Functions (aka 
- * mostly for debugging the functional chain).
+ * Something that consumes or accepts input.
+ * 
  * @author scott
+ *
+ * @param <I> input
+ * @param <O> output
+ * @author scott<br/><br/>
+ *
+ * <pre><code>
  *  ---------------- Apache ICENSE-2.0 --------------------------
  *
  * Copyright 2022 Adligo Inc
@@ -21,6 +29,26 @@ package org.adligo.i_pipe;
  * limitations under the License.
  * </code></pre>
  */
-public interface I_Named {
-	public String getName();
+public interface I_Consumer<I> {
+
+  /**
+   * Run the pipeline after it's creation
+   * 
+   * @param in
+   */
+  public void accept(I in);
+
+  /**
+   * Run the pipeline after it's creation
+   * 
+   * @param in
+   */
+  public void accept(@SuppressWarnings("unchecked") I... in);
+  
+  /**
+   * Run the pipeline after it's creation
+   * 
+   * @param in
+   */
+  public void accept(Collection<I> in);
 }

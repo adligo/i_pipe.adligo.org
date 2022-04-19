@@ -13,6 +13,13 @@ import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
+/**
+ * TODO this contains stuff / methods that will eventually 
+ * be added to I_Pipe
+ * @author scott
+ *
+ * @param <T>
+ */
 public interface I_PipeStream<T> {
 
 //	
@@ -53,10 +60,4 @@ public interface I_PipeStream<T> {
 //	I_Pipe<T> sorted(Comparator<? super T> comparator);
 //
 //	I_Pipe<T> skip(long n);
-//	
-//	void then(Consumer<? super T> consumer) ;
-//
-//	<R> I_Pipe<R> then(Function<? super T, ? extends R>  fun) ;
-//	
-//	I_Pipe<T> unordered();
 }
